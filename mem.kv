@@ -1,0 +1,20 @@
+#:kivy 1.0.9
+#: import ew kivy.uix.effectwidget
+
+<Character>:
+    size: 5, 5
+    canvas:
+        Color:
+            rgba: self.color
+        Ellipse:
+            pos: self.pos
+            size: self.size
+    EffectWidget:
+        effects: [ew.HorizontalBlurEffect(size=2.0)]
+
+<MemGame>:
+    chara: character
+    
+    Character:
+        id: character
+        center: self.parent.center
