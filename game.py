@@ -23,7 +23,7 @@ class MemGame(Widget):
         """Frame update function."""
 
         def move_against_chara(obj):
-            """Update the position of the given object against the character"""
+            """Update the position of the given object against the character."""
             obj.pos = Vector(*obj.pos) - self.chara.velocity
 
         self.chara.update()
