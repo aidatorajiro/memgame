@@ -1,5 +1,5 @@
 #:kivy 1.0.9
-#: import ew kivy.uix.effectwidget
+#:import ew kivy.uix.effectwidget
 
 <Character>:
     size: 5, 5
@@ -9,12 +9,24 @@
         Ellipse:
             pos: self.pos
             size: self.size
-    EffectWidget:
-        effects: [ew.HorizontalBlurEffect(size=2.0)]
+
+<ProcessSelect>:
+    size: 16, 16
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 <MemGame>:
     chara: character
+    select: process_select
     
     Character:
         id: character
+        center: self.parent.center
+    
+    ProcessSelect:
+        id: process_select
         center: self.parent.center
