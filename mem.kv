@@ -3,6 +3,7 @@
 
 <Character>:
     size: 5, 5
+    
     canvas:
         Color:
             rgba: self.color
@@ -10,18 +11,26 @@
             pos: self.pos
             size: self.size
 
+<Footprints>:
+    size: 0, 0
+    canvas:
+        Translate:
+            xy: self.pos
+
 <ProcessSelect>:
-    size: 16, 16
+    size: 0, 0
+
     canvas:
         Color:
             rgba: 1, 1, 1, 1
         Rectangle:
             pos: self.pos
-            size: self.size
+            size: 16, 16
 
 <MemGame>:
     chara: character
     select: process_select
+    footprints: footprints
     
     Character:
         id: character
@@ -29,4 +38,8 @@
     
     ProcessSelect:
         id: process_select
+        center: self.parent.center
+    
+    Footprints:
+        id: footprints
         center: self.parent.center

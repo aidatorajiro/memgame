@@ -5,9 +5,11 @@ import random
 from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty, ReferenceListProperty, BooleanProperty
 from kivy.vector import Vector
+from kivy.animation import Animation
 
 class Character(Widget):
     """Character class."""
+
     # absolute position of the character
     cx = NumericProperty(0)
     cy = NumericProperty(0)
@@ -53,5 +55,8 @@ class Character(Widget):
         """Touch down function.
         Increase the velocity.
         """
-        self.vx += math.atan((touch.pos[0] - self.pos[0]) / 10) / math.pi
-        self.vy += math.atan((touch.pos[1] - self.pos[1]) / 10) / math.pi
+
+        anim = Animation(vx=self.vx + math.atan((touch.pos[0] - self.pos[0]) / 10) / math.pi, 
+                         vy=self.vy + math.atan((touch.pos[1] - self.pos[1]) / 10) / math.pi)
+        
+        anim.start(self)
