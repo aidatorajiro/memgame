@@ -7,16 +7,17 @@ class Footprints(Widget):
     """Footprints class."""
     colors = ObjectProperty({})
 
-    def add_footprint(self, pos):
-        """Register a footprint.
-
+    def update(self, coord):
+        """Frame update function. Draw registered footprints.
+        
         Args:
-            pos: tuple of two numbers
-        """
-        self.colors[pos] = 1
+            coord: the coordinate of the character"""
 
-    def update(self):
-        """Frame update function. Draw registered footprints."""
+        x = coord[0]
+        y = coord[1]
+        
+        self.colors[(x - x % 16, y - y % 16)] = 1
+
         self.canvas.clear()
 
         with self.canvas:

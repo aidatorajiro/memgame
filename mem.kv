@@ -2,7 +2,14 @@
 #:import V kivy.vector
 
 <Character>:
-    size: 0, 0
+    size: 5, 5
+    
+    canvas:
+        Color:
+            rgba: self.color
+        Ellipse:
+            pos: self.pos
+            size: self.size
 
 <Footprints>:
     size: 0, 0

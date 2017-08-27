@@ -25,9 +25,4 @@ class MemGame(Widget):
         self.chara.update()
 
         # footprint
-        x = self.chara.coordinate[0]
-        y = self.chara.coordinate[1]
-
-        self.footprints.add_footprint((x - x % 16, y - y % 16))
-
-        self.footprints.update()
+        self.footprints.update(self.chara.coordinate)
