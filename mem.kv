@@ -1,5 +1,5 @@
 #:kivy 1.0.9
-#:import ew kivy.uix.effectwidget
+#:import V kivy.vector
 
 <Character>:
     size: 0, 0
@@ -22,7 +22,9 @@
     ProcessSelect:
         id: process_select
         center: self.parent.center
+        pos: V.Vector(*self.parent.chara.pos) - self.parent.chara.coordinate
     
     Footprints:
         id: footprints
         center: self.parent.center
+        pos: V.Vector(*self.parent.chara.pos) - self.parent.chara.coordinate

@@ -31,7 +31,3 @@ class MemGame(Widget):
         self.footprints.add_footprint((x - x % 16, y - y % 16))
 
         self.footprints.update()
-
-        # update the position of the game objects
-        obj_pos = Vector(*self.chara.pos) - self.chara.coordinate
-        self.select.pos = self.footprints.pos = obj_pos
