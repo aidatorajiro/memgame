@@ -11,27 +11,37 @@
             pos: self.pos
             size: self.size
 
-<Footprints>:
+<TranslateHack>:
     size: 0, 0
+    canvas:
+        Translate:
+            xy: self.pos
 
 <ProcessSelect>:
     size: 0, 0
 
+<Footprints>:
+    size: 0, 0
+
 <MemGame>:
     chara: character
+    translate_hack: translate_hack
     select: process_select
     footprints: footprints
-    
+     
     Character:
         id: character
         center: self.parent.center
     
+    TranslateHack:
+        id: translate_hack
+        center: self.parent.center
+        pos: self.parent.chara.pos[0] - self.parent.chara.coordinate[0], self.parent.chara.pos[1] - self.parent.chara.coordinate[1]
+    
     ProcessSelect:
         id: process_select
         center: self.parent.center
-        pos: V.Vector(*self.parent.chara.pos) - self.parent.chara.coordinate
     
     Footprints:
         id: footprints
         center: self.parent.center
-        pos: V.Vector(*self.parent.chara.pos) - self.parent.chara.coordinate

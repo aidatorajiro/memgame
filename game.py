@@ -1,14 +1,16 @@
 from character import Character
+from translate_hack import TranslateHack
 from footprints import Footprints
 from process_select import ProcessSelect
 from kivy.properties import ObjectProperty
 from kivy.vector import Vector
 from kivy.uix.widget import Widget
-from kivy.graphics import Rectangle, Color
+from kivy.graphics import Translate
 
 class MemGame(Widget):
     # game objects
     chara = ObjectProperty(None)
+    translate_hack = ObjectProperty(None)
     select = ObjectProperty(None)
     footprints = ObjectProperty(None)
 
