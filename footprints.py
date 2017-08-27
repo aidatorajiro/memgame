@@ -9,14 +9,11 @@ class Footprints(Widget):
 
     def update(self, coord):
         """Frame update function. Draw registered footprints.
-        
+
         Args:
             coord: the coordinate of the character"""
 
-        x = coord[0]
-        y = coord[1]
-        
-        self.colors[(x - x % 16, y - y % 16)] = 1
+        self.colors[(coord[0], coord[1])] = 1
 
         self.canvas.clear()
 
@@ -24,5 +21,9 @@ class Footprints(Widget):
             Translate(self.pos[0], self.pos[1])
             for pos, c in self.colors.items():
                 Color(c, c, c)
-                Rectangle(pos=(pos[0] + 1, pos[1] + 1), size=(15, 15))
+                Rectangle(pos=(pos[0] + 1, pos[1] + 1), size=(2, 2))
                 self.colors[pos] *= 0.95
+        
+        for i in self.colors.keys():
+            if self.colors[i] < 0.01:
+                del self.colors[i]
