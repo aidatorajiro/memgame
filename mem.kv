@@ -25,16 +25,10 @@
 
 <MemGame>:
     chara: character
-    translate_hack: translate_hack
     select: process_select
     footprints: footprints
-     
-    Character:
-        id: character
-        center: self.parent.center
     
     TranslateHack:
-        id: translate_hack
         center: self.parent.center
         pos: self.parent.chara.pos[0] - self.parent.chara.coordinate[0], self.parent.chara.pos[1] - self.parent.chara.coordinate[1]
     
@@ -44,4 +38,12 @@
     
     Footprints:
         id: footprints
+        center: self.parent.center
+    
+    TranslateHack:
+        center: self.parent.center
+        pos: self.parent.chara.coordinate[0] - self.parent.chara.pos[0], self.parent.chara.coordinate[1] - self.parent.chara.pos[1]
+    
+    Character:
+        id: character
         center: self.parent.center

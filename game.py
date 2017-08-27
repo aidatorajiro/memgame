@@ -10,7 +10,6 @@ from kivy.graphics import Translate
 class MemGame(Widget):
     # game objects
     chara = ObjectProperty(None)
-    translate_hack = ObjectProperty(None)
     select = ObjectProperty(None)
     footprints = ObjectProperty(None)
 
