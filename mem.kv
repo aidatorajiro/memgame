@@ -2,30 +2,13 @@
 #:import ew kivy.uix.effectwidget
 
 <Character>:
-    size: 5, 5
-    
-    canvas:
-        Color:
-            rgba: self.color
-        Ellipse:
-            pos: self.pos
-            size: self.size
+    size: 0, 0
 
 <Footprints>:
     size: 0, 0
-    canvas:
-        Translate:
-            xy: self.pos
 
 <ProcessSelect>:
     size: 0, 0
-
-    canvas:
-        Color:
-            rgba: 1, 1, 1, 1
-        Rectangle:
-            pos: self.pos
-            size: 16, 16
 
 <MemGame>:
     chara: character

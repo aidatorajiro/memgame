@@ -1,6 +1,6 @@
 from memorpy import MemWorker
 from memorpy import Process
-from kivy.properties import ListProperty
+from kivy.properties import ListProperty, NumericProperty, ReferenceListProperty
 from kivy.uix.widget import Widget
 from kivy.graphics import Rectangle, Color
 

@@ -57,6 +57,7 @@ class Character(Widget):
         """
 
         anim = Animation(vx=self.vx + math.atan((touch.pos[0] - self.pos[0]) / 10) / math.pi, 
-                         vy=self.vy + math.atan((touch.pos[1] - self.pos[1]) / 10) / math.pi)
-        
+                         vy=self.vy + math.atan((touch.pos[1] - self.pos[1]) / 10) / math.pi,
+                         duration=0.25)
+
         anim.start(self)

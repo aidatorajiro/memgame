@@ -14,28 +14,24 @@ class MemGame(Widget):
 
     def start(self):
         """Game initialize function."""
-        self.chara.center = self.center
-        self.chara.pos = (0, 0)
-        self.chara.velocity = (0, 0)
-        self.chara.coordinate = (0, 0)
 
-        self.footprints.center = self.center
-
+        # process select
         self.select.start()
 
     def update(self, _):
         """Frame update function."""
 
-        def move_against_chara(obj):
-            """Update the position of the given object against the character."""
-            obj.pos = Vector(*obj.pos) - self.chara.velocity
-
         # character
         self.chara.update()
 
         # footprint
-        self.footprints.add_footprint(self.chara.coordinate)
+        x = self.chara.coordinate[0]
+        y = self.chara.coordinate[1]
 
-        # other objects
-        move_against_chara(self.select)
-        move_against_chara(self.footprints)
+        self.footprints.add_footprint((x - x % 16, y - y % 16))
+
+        self.footprints.update()
+
+        # update the position of the game objects
+        obj_pos = Vector(*self.chara.pos) - self.chara.coordinate
+        self.select.pos = self.footprints.pos = obj_pos
