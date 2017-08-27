@@ -15,7 +15,7 @@ class MemGame(Widget):
     def start(self):
         """Game initialize function."""
 
-        # process select
+        # prepare process select
         self.select.start()
 
     def update(self, _):
@@ -26,3 +26,6 @@ class MemGame(Widget):
 
         # footprint
         self.footprints.update(self.chara.coordinate)
+
+        # process select
+        self.select.update(self.chara.coordinate)

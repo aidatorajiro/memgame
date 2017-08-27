@@ -11,3 +11,6 @@ class ProcessSelect(Widget):
     def start(self):
         """Initialize function."""
         self.process_list = Process.list()
+    
+    def update(self, coord):
+        """Frame update function."""
