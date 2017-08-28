@@ -31,7 +31,7 @@ class Character(Widget):
         """Returns the magnitude of the velocity"""
         return self.velocity[0] ** 2 + self.velocity[1] ** 2
 
-    def update(self):
+    def update(self, dt):
         """Frame update function.
         It updates some internal parameters and character's appearance by following order:
         1. Update the character's coordinate by the velocity.
