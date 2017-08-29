@@ -1,4 +1,4 @@
-from message import Message
+from message_box import MessageBox
 from character import Character
 from translate_hack import TranslateHack
 from footprints import Footprints
@@ -9,7 +9,7 @@ from kivy.uix.widget import Widget
 
 class MemGame(Widget):
     # game objects
-    message = ObjectProperty(None)
+    message_box = ObjectProperty(None)
     chara = ObjectProperty(None)
     select = ObjectProperty(None)
     footprints = ObjectProperty(None)

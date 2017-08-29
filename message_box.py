@@ -1,4 +1,4 @@
 from kivy.uix.widget import Widget
 
-class Message(Widget):
+class MessageBox(Widget):
     pass
