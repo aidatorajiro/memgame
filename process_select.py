@@ -90,7 +90,7 @@ class ProcessSelect(Widget):
             self.time_left = 1
             self.current_process_index = i
 
-            # progress overwrapangle
+            # progress rectangle
             if i != -1:
                 pid = self.process_list[i]["pid"]
 
@@ -124,7 +124,7 @@ class ProcessSelect(Widget):
         else:
             self.time_left -= 0.01
 
-        # draw progress overwrapangle
+        # draw progress rectangle
         if self.overwrap is not None:
             self.canvas.remove(self.overwrap)
             self.canvas.remove(self.text)
