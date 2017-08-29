@@ -7,11 +7,13 @@ class Footprints(Widget):
     """Footprints class."""
     colors = ObjectProperty({})
 
-    def update(self, coord):
+    def update(self, _, chara):
         """Frame update function. Draw registered footprints.
 
         Args:
-            coord: the coordinate of the character"""
+            chara: character object"""
+        
+        coord = chara.coordinate
 
         self.colors[(coord[0], coord[1])] = 1
 

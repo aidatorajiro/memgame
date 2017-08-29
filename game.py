@@ -27,7 +27,7 @@ class MemGame(Widget):
         self.chara.update(dt)
 
         # footprint
-        self.footprints.update(self.chara.coordinate)
+        self.footprints.update(dt, self.chara)
 
         # process select
-        self.select.update(self.chara.coordinate)
+        self.select.update(dt, self.chara)

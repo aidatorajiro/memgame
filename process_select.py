@@ -15,15 +15,15 @@ class ProcessSelect(Widget):
     time_left = NumericProperty(1) # time left until the character dives
     process_list = ListProperty([])
 
-    rect = ObjectProperty(None)
-    rect_pos_x = NumericProperty(0)
-    rect_pos_y = NumericProperty(0)
-    rect_pos = ReferenceListProperty(rect_pos_x, rect_pos_y)
-    rect_r = NumericProperty(1)
-    rect_g = NumericProperty(1)
-    rect_b = NumericProperty(1)
-    rect_color = ReferenceListProperty(rect_r, rect_g, rect_b)
-    rect_color_anim = ObjectProperty(None)
+    overwrap = ObjectProperty(None)
+    overwrap_pos_x = NumericProperty(0)
+    overwrap_pos_y = NumericProperty(0)
+    overwrap_pos = ReferenceListProperty(overwrap_pos_x, overwrap_pos_y)
+    overwrap_r = NumericProperty(1)
+    overwrap_g = NumericProperty(1)
+    overwrap_b = NumericProperty(1)
+    overwrap_color = ReferenceListProperty(overwrap_r, overwrap_g, overwrap_b)
+    overwrap_color_anim = ObjectProperty(None)
 
     text = ObjectProperty(None)
     text_pos_x = NumericProperty(0)
@@ -35,8 +35,8 @@ class ProcessSelect(Widget):
     dive_phase = BooleanProperty(False)
 
     columns = 20
-    rect_interval = 120
-    rect_size = 64
+    overwrap_interval = 120
+    overwrap_size = 64
 
     def start(self):
         """Initialize function."""
@@ -52,12 +52,12 @@ class ProcessSelect(Widget):
 
             for proc in self.process_list:
                 # calculate position
-                posx = (i % self.columns)*self.rect_interval
-                posy = int(i / self.columns)*self.rect_interval
+                posx = (i % self.columns)*self.overwrap_interval
+                posy = int(i / self.columns)*self.overwrap_interval
 
                 # draw squares
                 Color(1, 1, 1)
-                Rectangle(pos=(posx, posy), size=(self.rect_size, self.rect_size))
+                Rectangle(pos=(posx, posy), size=(self.overwrap_size, self.overwrap_size))
 
                 # draw text
                 Color(0, 0, 0)
@@ -65,19 +65,23 @@ class ProcessSelect(Widget):
 
                 i += 1
 
-    def update(self, coord):
-        """Frame update function."""
+    def update(self, _, chara):
+        """Frame update function.
+        Args:
+            chara: character object"""
+
+        coord = chara.coordinate
 
         if self.dive_phase is True:
             return
 
         # calculate the index of selected process
-        i = int(coord[0] / self.rect_interval) + int(coord[1] / self.rect_interval) * 20
+        i = int(coord[0] / self.overwrap_interval) + int(coord[1] / self.overwrap_interval) * 20
         if (coord[0] < 0 or
                 coord[1] < 0 or
-                coord[0] > self.columns*self.rect_interval or
-                coord[0] % self.rect_interval > self.rect_size or
-                coord[1] % self.rect_interval > self.rect_size or
+                coord[0] > self.columns*self.overwrap_interval or
+                coord[0] % self.overwrap_interval > self.overwrap_size or
+                coord[1] % self.overwrap_interval > self.overwrap_size or
                 i >= len(self.process_list)):
             i = -1 # case of no select or invalid select
 
@@ -86,48 +90,48 @@ class ProcessSelect(Widget):
             self.time_left = 1
             self.current_process_index = i
 
-            # progress rectangle
+            # progress overwrapangle
             if i != -1:
                 pid = self.process_list[i]["pid"]
 
-                self.rect_color_anim = Animation(
-                    rect_r=0.97,
-                    rect_g=0.2,
-                    rect_b=0,
+                self.overwrap_color_anim = Animation(
+                    overwrap_r=0.97,
+                    overwrap_g=0.2,
+                    overwrap_b=0,
                     duration=2.)
 
                 self.dive_clock = Clock.schedule_once(partial(self.dive, pid), 2.)
 
-                self.rect_color_anim.start(self)
+                self.overwrap_color_anim.start(self)
 
-                posx = (i % self.columns)*self.rect_interval
-                posy = int(i / self.columns)*self.rect_interval
+                posx = (i % self.columns)*self.overwrap_interval
+                posy = int(i / self.columns)*self.overwrap_interval
 
-                self.rect_pos_x = posx-1
-                self.rect_pos_y = posy-1
+                self.overwrap_pos_x = posx-1
+                self.overwrap_pos_y = posy-1
 
                 self.text_content = str(pid)
                 self.text_pos_x = posx
                 self.text_pos_y = posy
             else:
-                self.rect_r = 1
-                self.rect_g = 1
-                self.rect_b = 1
+                self.overwrap_r = 1
+                self.overwrap_g = 1
+                self.overwrap_b = 1
 
-                self.rect_color_anim.stop(self)
+                self.overwrap_color_anim.stop(self)
 
                 self.dive_clock.cancel()
         else:
             self.time_left -= 0.01
 
-        # draw progress rectangle
-        if self.rect is not None:
-            self.canvas.remove(self.rect)
+        # draw progress overwrapangle
+        if self.overwrap is not None:
+            self.canvas.remove(self.overwrap)
             self.canvas.remove(self.text)
 
         with self.canvas:
-            Color(*self.rect_color)
-            self.rect = Rectangle(pos=self.rect_pos, size=(66, 66))
+            Color(*self.overwrap_color)
+            self.overwrap = Rectangle(pos=self.overwrap_pos, size=(66, 66))
             Color(0, 0, 0)
             self.text = draw_text_on_canvas(self.text_content, pos=self.text_pos)
 
