@@ -19,6 +19,9 @@ class ProcessSelect(Widget):
     overwrap_pos_x = NumericProperty(0)
     overwrap_pos_y = NumericProperty(0)
     overwrap_pos = ReferenceListProperty(overwrap_pos_x, overwrap_pos_y)
+    overwrap_size_w = NumericProperty(0)
+    overwrap_size_h = NumericProperty(66)
+    overwrap_size = ReferenceListProperty(overwrap_size_w, overwrap_size_h)
     overwrap_r = NumericProperty(1)
     overwrap_g = NumericProperty(1)
     overwrap_b = NumericProperty(1)
@@ -32,11 +35,11 @@ class ProcessSelect(Widget):
     text_content = StringProperty("")
 
     dive_clock = ObjectProperty(None)
-    dive_phase = BooleanProperty(False)
+    finished = BooleanProperty(False)
 
     columns = 20
-    overwrap_interval = 120
-    overwrap_size = 64
+    cell_interval = 120
+    cell_size = (64, 64)
 
     def start(self):
         """Initialize function."""
@@ -52,12 +55,12 @@ class ProcessSelect(Widget):
 
             for proc in self.process_list:
                 # calculate position
-                posx = (i % self.columns)*self.overwrap_interval
-                posy = int(i / self.columns)*self.overwrap_interval
+                posx = (i % self.columns)*self.cell_interval
+                posy = int(i / self.columns)*self.cell_interval
 
                 # draw squares
                 Color(1, 1, 1)
-                Rectangle(pos=(posx, posy), size=(self.overwrap_size, self.overwrap_size))
+                Rectangle(pos=(posx, posy), size=self.cell_size)
 
                 # draw text
                 Color(0, 0, 0)
@@ -72,16 +75,16 @@ class ProcessSelect(Widget):
 
         coord = chara.coordinate
 
-        if self.dive_phase is True:
+        if self.finished is True:
             return
 
         # calculate the index of selected process
-        i = int(coord[0] / self.overwrap_interval) + int(coord[1] / self.overwrap_interval) * 20
+        i = int(coord[0] / self.cell_interval) + int(coord[1] / self.cell_interval) * 20
         if (coord[0] < 0 or
                 coord[1] < 0 or
-                coord[0] > self.columns*self.overwrap_interval or
-                coord[0] % self.overwrap_interval > self.overwrap_size or
-                coord[1] % self.overwrap_interval > self.overwrap_size or
+                coord[0] > self.columns*self.cell_interval or
+                coord[0] % self.cell_interval > self.cell_size[0] or
+                coord[1] % self.cell_interval > self.cell_size[1] or
                 i >= len(self.process_list)):
             i = -1 # case of no select or invalid select
 
@@ -98,14 +101,15 @@ class ProcessSelect(Widget):
                     overwrap_r=0.97,
                     overwrap_g=0.2,
                     overwrap_b=0,
+                    overwrap_size_w=66,
                     duration=2.)
 
                 self.dive_clock = Clock.schedule_once(partial(self.dive, pid), 2.)
 
                 self.overwrap_color_anim.start(self)
 
-                posx = (i % self.columns)*self.overwrap_interval
-                posy = int(i / self.columns)*self.overwrap_interval
+                posx = (i % self.columns)*self.cell_interval
+                posy = int(i / self.columns)*self.cell_interval
 
                 self.overwrap_pos_x = posx-1
                 self.overwrap_pos_y = posy-1
@@ -117,6 +121,7 @@ class ProcessSelect(Widget):
                 self.overwrap_r = 1
                 self.overwrap_g = 1
                 self.overwrap_b = 1
+                self.overwrap_size_w = 0
 
                 self.overwrap_color_anim.stop(self)
 
@@ -131,7 +136,7 @@ class ProcessSelect(Widget):
 
         with self.canvas:
             Color(*self.overwrap_color)
-            self.overwrap = Rectangle(pos=self.overwrap_pos, size=(66, 66))
+            self.overwrap = Rectangle(pos=self.overwrap_pos, size=self.overwrap_size)
             Color(0, 0, 0)
             self.text = draw_text_on_canvas(self.text_content, pos=self.text_pos)
 
@@ -139,7 +144,7 @@ class ProcessSelect(Widget):
         """Diving function."""
         try:
             mw = MemWorker(pid=pid)
-            self.dive_phase = True
+            self.finished = True
             anim = Animation(opacity = 0)
             anim.start(self)
         except:
