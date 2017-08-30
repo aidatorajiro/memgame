@@ -18,10 +18,12 @@ from utils import draw_text_on_canvas
 import os
 
 class ProcessSelect(Widget):
-    current_process_index = NumericProperty(-1)
-    process_list = ListProperty([])
+    pid = NumericProperty(-1)
 
-    dive_clock = ObjectProperty(None)
+    current_process_index = NumericProperty(-1)
+    process_list = []
+
+    dive_clock = None
     finished = BooleanProperty(False)
 
     columns = 20
@@ -29,9 +31,9 @@ class ProcessSelect(Widget):
     cell_size = (64, 64)
 
     # instruction groups
-    cells = ObjectProperty(None)
-    overwrap = ObjectProperty(None)
-    lebels = ObjectProperty(None)
+    cells = None
+    overwrap = None
+    lebels = None
 
     # properties about overwrap rectangle
     overwrap_pos_x = NumericProperty(0)
@@ -45,7 +47,7 @@ class ProcessSelect(Widget):
     overwrap_b = NumericProperty(1)
     overwrap_a = NumericProperty(0)
     overwrap_color = ReferenceListProperty(overwrap_r, overwrap_g, overwrap_b, overwrap_a)
-    overwrap_color_anim = ObjectProperty(None)
+    overwrap_color_anim = None
 
     def index_to_pos(self, i):
         """Calculate position from index"""
@@ -92,7 +94,7 @@ class ProcessSelect(Widget):
                 self.cells.add(Color(0.8, 0.8, 0.8))
             else:
                 self.cells.add(Color(1, 1, 1))
-            
+
             self.cells.add(Rectangle(pos=(posx, posy), size=self.cell_size))
 
             # draw text
@@ -151,14 +153,18 @@ class ProcessSelect(Widget):
 
     def dive(self, index, _):
         """Diving function."""
-        pid = self.process_list[index]["pid"]
+        self.pid = self.process_list[index]["pid"]
         try:
-            mw = MemWorker(pid=pid)
-            self.finished = True
-            anim = Animation(opacity=0)
-            anim.start(self)
+            MemWorker(pid=self.pid)
         except:
             posx, posy = self.index_to_pos(index)
             with self.canvas:
                 Color(0.97, 0.1, 0)
                 draw_text_on_canvas("ERROR", font_size=20, pos=(posx+1, posy+30))
+        else:
+            self.finished = True
+            anim = Animation(opacity=0)
+            def tmp(*args):
+                self.canvas.clear()
+            anim.bind(on_complete=tmp)
+            anim.start(self)
