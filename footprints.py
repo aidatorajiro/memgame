@@ -6,14 +6,12 @@ from kivy.vector import Vector
 class Footprints(Widget):
     """Footprints class."""
     colors = ObjectProperty({})
+    chara = ObjectProperty(None)
 
-    def update(self, _, chara):
-        """Frame update function. Draw registered footprints.
-
-        Args:
-            chara: character object"""
+    def update(self, dt):
+        """Frame update function. Draw registered footprints."""
         
-        coord = chara.coordinate
+        coord = self.chara.coordinate
 
         self.colors[(coord[0], coord[1])] = 1
 

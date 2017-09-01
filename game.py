@@ -33,7 +33,11 @@ class MemGame(Widget):
         self.chara.update(dt)
 
         # footprint
-        self.footprints.update(dt, self.chara)
+        self.footprints.update(dt)
 
         # process select
-        self.select.update(dt, self.chara)
+        self.select.update(dt)
+
+        # process view
+        if self.processview.pid is not None: # if processview have started
+            self.processview.update(dt)

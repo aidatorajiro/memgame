@@ -20,6 +20,8 @@ import os
 class ProcessSelect(Widget):
     pid = NumericProperty(-1)
 
+    chara = ObjectProperty(None)
+
     current_process_index = NumericProperty(-1)
     process_list = []
 
@@ -107,12 +109,10 @@ class ProcessSelect(Widget):
         self.canvas.add(self.overwrap)
         self.canvas.add(self.lebels)
 
-    def update(self, _, chara):
-        """Frame update function.
-        Args:
-            chara: character object"""
+    def update(self, dt):
+        """Frame update function."""
 
-        coord = chara.coordinate
+        coord = self.chara.coordinate
 
         if self.finished is True:
             return
