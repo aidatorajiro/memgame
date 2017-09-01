@@ -37,7 +37,3 @@ class MemGame(Widget):
 
         # process select
         self.select.update(dt)
-
-        # process view
-        if self.processview.pid is not None: # if processview have started
-            self.processview.update(dt)
