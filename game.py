@@ -22,6 +22,9 @@ class MemGame(Widget):
         # prepare process select
         self.select.start()
         self.select.bind(finished=self.after_select)
+    
+    def stop(self):
+        self.processview.stop() # to stop threading
 
     def after_select(self, select, finished):
         self.processview.start(select.pid)

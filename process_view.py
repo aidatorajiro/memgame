@@ -23,19 +23,24 @@ class ProcessView(Widget):
     update_width = 20
     update_height = 20
 
+    stop_infinite_update_map = False
+
+    def infinite_update_map(self):
+        while not self.stop_infinite_update_map:
+            self.update_map()
+            time.sleep(0.1)
+
     def start(self, pid):
         self.pid = pid
         self.worker = MemWorker(pid=self.pid)
         self.region = random.choice(list(self.worker.process.iter_region()))
         self.world_width = self.world_height = int(math.sqrt(self.region[1]))
         Clock.schedule_interval(self.draw_map, 1 / 60)
-
-        def infinite_update_map():
-            while True:
-                self.update_map()
-                time.sleep(0.1)
-        threading.Thread(target=infinite_update_map).start()
+        threading.Thread(target=self.infinite_update_map).start()
         print(self.region)
+
+    def stop(self):
+        self.stop_infinite_update_map = True
 
     def update_map(self):
         center = (int(self.chara.coordinate[0]) >> 4,
@@ -45,9 +50,9 @@ class ProcessView(Widget):
         offset_y = self.world_height / 2
 
         for i in range(int(self.chara.coordinate[0] - self.chara.pos[0]) >> 4,
-                        int(self.chara.coordinate[0] + self.chara.pos[0]) >> 4):
+                       int(self.chara.coordinate[0] + self.chara.pos[0]) >> 4):
             for j in range(int(self.chara.coordinate[1] - self.chara.pos[1]) >> 4,
-                            int(self.chara.coordinate[1] + self.chara.pos[1]) >> 4):
+                           int(self.chara.coordinate[1] + self.chara.pos[1]) >> 4):
                 x = center[0] + j
                 y = center[1] + i
                 addr_x = x + offset_x
