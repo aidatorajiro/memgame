@@ -43,7 +43,7 @@ class ProcessView(Widget):
     def infinite_update_map(self):
         while not self.stop_infinite_update_map:
             self.update_map()
-            time.sleep(0.1)
+            time.sleep(1)
 
     def start(self, pid):
         self.pid = pid
@@ -68,12 +68,12 @@ class ProcessView(Widget):
                        int(self.chara.coordinate[0] + self.chara.pos[0]) >> 4):
             for j in range(int(self.chara.coordinate[1] - self.chara.pos[1]) >> 4,
                            int(self.chara.coordinate[1] + self.chara.pos[1]) >> 4):
-                x = center[0] + j
-                y = center[1] + i
+                x = center[0] + i
+                y = center[1] + j
                 addr_x = x + offset_x
                 addr_y = y + offset_y
                 addr_x_mod = addr_x % self.world_width
-                addr_y_mod = addr_y % self.world_width
+                addr_y_mod = addr_y % self.world_height
                 address = (self.region[0] +
                            self.world_width * addr_y_mod +
                            addr_x_mod)
