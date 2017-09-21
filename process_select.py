@@ -172,8 +172,8 @@ class ProcessSelect(Widget):
         self.pid = self.process_list[index]["pid"]
         try:
             mw = MemWorker(pid=self.pid)
-            reg = next(mw.process.iter_region())
-            mw.process.read_bytes(reg[0], bytes=1)
+            regs = list(mw.process.iter_region())
+            mw.process.read_bytes(regs[0][0], bytes=1)
         except:
             posx, posy = self.index_to_pos(index)
             with self.canvas:
