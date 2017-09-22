@@ -18,4 +18,5 @@ from kivy.config import Config
 
 if __name__ == '__main__':
     Config.set("input", "mouse", "mouse,disable_multitouch")
+    Config.set("graphics", "multisamples", "0")
     MemApp().run()
