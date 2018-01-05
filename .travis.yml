@@ -79,9 +79,6 @@ before_script:
     fi;
 
 script:
-  - if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
-      
-    fi;
   - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then
       pyinstaller -y --clean --windowed --name memgame \
         --exclude-module _tkinter \
