@@ -22,9 +22,11 @@ if __name__ == '__main__':
     MemApp().run()
 
 import threading
- 
+import os
+import signal
+
 def hello():
-    exit()
- 
+    os.kill(os.getpid(), signal.SIGTERM)
+
 t=threading.Timer(10,hello)
 t.start()
