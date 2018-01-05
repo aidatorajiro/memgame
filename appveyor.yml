@@ -34,11 +34,6 @@ build_script:
     git clone -q --branch=master https://github.com/kivy/kivy-sdk-packager.git C:\projects\kivy-sdk-packager
     Check-Error
     $PYTHONPATH = "$env:APPVEYOR_BUILD_FOLDER;$PYTHONPATH"
-    echo "Build folder: $env:APPVEYOR_BUILD_FOLDER. Wheel folder: $env:WHEEL_DIR."
-    mkdir "$env:KIVY_BUILD_DIR"
-    Check-Error
-    mkdir "$env:WHEEL_DIR"
-    Check-Error
     C:\Python27\Scripts\pip.exe install pydrive
     Check-Error
     if ($env:BITTNESS -eq "64") {
@@ -50,37 +45,7 @@ build_script:
     }
     $env:PATH = "$PYTHON_ROOT;$PYTHON_ROOT\Scripts;$env:PATH;C:\Program Files\7-Zip"
     $env:PATH = $PYTHON_ROOT+"\share\glew\bin;"+$PYTHON_ROOT+"\share\sdl2\bin;"+$PYTHON_ROOT+"\share\gstreamer\bin;"+$env:PATH
-    $WHEEL_DATE = python -c "from datetime import datetime;print(datetime.utcnow().strftime('%Y%m%d'))"
     Check-Error
-    $GIT_TAG = git rev-parse --short HEAD
-    Check-Error
-    python -c "import kivy"
-    Check-Error
-    $WHEEL_VERSION = python -c "import kivy;print(kivy.__version__)" --config "kivy:log_level:error"
-    Check-Error
-    echo "Kivy version is: $WHEEL_VERSION"
-    python -c "import sys;print('Python version is {}'.format(sys.version))"
-    Check-Error
-    $env:DO_TEST = "True"
-    if ($env:APPVEYOR_SCHEDULED_BUILD -eq "True"){
-      $env:DO_TEST = "False"
-    }
-    $DO_WHEEL = $env:DO_WHEEL
-    # Set new wheel name, keep default if release (tag)
-    # release: Kivy-X.Y.Z-cpAB-cpABm-ARCH.whl (Kivy_examples-X.Y.Z-py2.py3-none-any.whl)
-    # nightly: Kivy-X.Y.Z.dev0-cpAB-cpABm-ARCH.whl (Kivy_examples-X.Y.Z.dev0-py2.py3-none-any.whl)
-    # archive: Kivy-X.Y.Z.dev0.YYYYMMDD.githash-cpAB-cpABm-ARCH.whl (Kivy_examples-X.Y.Z.dev0.YYYYMMDD.githash-py2.py3-none-any.whl)
-    if ($env:APPVEYOR_REPO_TAG -eq "true"){
-      $WHEEL_NAME = "dev0-"
-    } elseif ($env:APPVEYOR_SCHEDULED_BUILD -eq "True" -or $env:APPVEYOR_FORCED_BUILD -eq "True" -or $env:APPVEYOR_RE_BUILD -eq "True"){
-      $WHEEL_NAME = "dev0.$WHEEL_DATE`.$GIT_TAG-"
-    } else {
-      $DO_WHEEL = "False"
-    }
-    if ($env:APPVEYOR_REPO_BRANCH -ne "master") {
-      $DO_WHEEL = "False"
-    }
-    echo "test=$env:DO_TEST, make_wheel=$DO_WHEEL"
     python -m pip install pip wheel setuptools --upgrade
     Check-Error
     if ($env:COMPILER -ne "msvc") {
@@ -95,7 +60,7 @@ build_script:
     pip install kivy pyinstaller
     Check-Error
     python -m PyInstaller --name memgame ./main.py
-    python -m PyInstaller memgame.spec
+    python -m PyInstaller memgame.win.spec
     7z a memgame.zip ./dist/memgame
 artifacts:
   - path: memgame.zip
