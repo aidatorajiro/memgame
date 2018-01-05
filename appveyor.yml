@@ -59,8 +59,8 @@ build_script:
     Check-Error
     pip install kivy pyinstaller
     Check-Error
-    python -m PyInstaller --name memgame ./main.py
-    python -m PyInstaller memgame.win.spec
+    python -m PyInstaller -y --name memgame ./main.py
+    python -m PyInstaller -y memgame.win.spec
     7z a memgame.zip ./dist/memgame
 artifacts:
   - path: memgame.zip
