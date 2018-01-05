@@ -56,7 +56,7 @@ install:
       sudo cp -a /Volumes/SDL2_mixer/SDL2_mixer.framework /Library/Frameworks/;
       sudo installer -package gstreamer-1.0-1.10.2-x86_64.pkg -target /;
       sudo installer -package gstreamer-1.0-devel-1.10.2-x86_64.pkg -target /;
-      sudo easy_install pip
+      sudo easy_install pip;
       if [ "${PY}" == "3" ]; then
          curl -O -L https://www.python.org/ftp/python/3.5.2/python-3.5.2-macosx10.6.pkg;
          sudo installer -package python-3.5.2-macosx10.6.pkg -target /;
