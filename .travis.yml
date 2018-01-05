@@ -85,10 +85,10 @@ script:
         --exclude-module Tkinter \
         --exclude-module enchant \
         --exclude-module twisted \
-        ./main.py
-      pushd dist
-      hdiutil create ./memgame.dmg -srcfolder memgame.app -ov
-      popd
+        ./main.py;
+      pushd dist;
+      hdiutil create ./memgame.dmg -srcfolder memgame.app -ov;
+      popd;
     fi;
 
 deploy:
