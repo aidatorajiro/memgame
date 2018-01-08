@@ -4,9 +4,9 @@ This is an adventure game that explores the vast memory region in your computer.
 You will see a small universe, which is present in your computer.
 
 ## Screen Shots
-!(Screen Shot 1)[scrshot1.png]
-!(Screen Shot 2)[scrshot2.png]
-!(Screen Shot 3)[scrshot3.png]
+![Screen Shot 1](scrshot1.png)
+![Screen Shot 2](scrshot2.png)
+![Screen Shot 3](scrshot3.png)
 
 ## Libraries which are used in this software
 - memorpy (c) Nicolas VERDIER
