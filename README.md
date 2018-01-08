@@ -11,6 +11,17 @@ You will see a small universe, which is present in your computer.
 ## Libraries which are used in this software
 - memorpy (c) Nicolas VERDIER
 
+## Installation / Run
+A little complicated.
+First, you have to install [Kivy](https://kivy.org/). It is multi-platform graphic library for Python.
+Follow this article in order to install Kivy. Use Python 2.7.x. <https://kivy.org/docs/installation/>
+
+then, run following command.
+
+```bash
+$ python ./main.py
+```
+
 ## LICENSE
 
 Copyright (C) 2017 Torajiro Aida
