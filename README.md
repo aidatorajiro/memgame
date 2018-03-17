@@ -21,6 +21,11 @@ then, run following command.
 $ python ./main.py
 ```
 
+## How to play
+
+Japanese -> HOWTOPLAY.ja.md
+English -> HOWTOPLAY.en.md
+
 ## LICENSE
 
 Copyright (C) 2017 Torajiro Aida
